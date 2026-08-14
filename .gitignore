@@ -1,0 +1,6 @@
+*.rar
+*.zip
+*.tar.gz
+node_modules/
+.next/
+.env.local
