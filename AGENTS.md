@@ -57,3 +57,16 @@
    - Queda prohibido asignar fechas por defecto de fin de temporada (como amontonar decenas de partidos en mayo) o colocar partidos de la segunda vuelta en jornadas tempranas.
 2. **No Duplicidad de Jornadas**:
    - Un equipo nunca puede tener programados partidos de ida y vuelta en la misma fecha ni enfrentarse al mismo rival dos veces en el mismo fin de semana.
+
+---
+
+## 5. REGLA DE SINCRONIZACIÓN HORARIA Y PROPAGACIÓN UNIVERSAL FFCV
+
+1. **Aplicación Universal a Todos los Equipos Federados**:
+   - Todo equipo del club asignado a una competición oficial FFCV (`SENIOR`, `JUVENIL A`, `JUVENIL B`, `CADETE`, `INFANTIL`, etc.) debe mantener su calendario sincronizado con la FFCV.
+   - Toda consulta federativa debe filtrar por los grupos de los equipos del club (`in('ffcv_group_id', clubGroupIds)`) y garantizar un límite de filas suficiente para evitar truncamientos de registros (>1.000 filas).
+2. **Huso Horario Oficial Peninsular (Europe/Madrid)**:
+   - Toda hora publicada por la FFCV debe transformarse con el desfase peninsular exacto (`formatSpainDateTimeToIso`): `+02:00` en horario de verano (CEST, marzo a octubre) y `+01:00` en horario de invierno (CET, noviembre a marzo).
+   - Queda terminantemente prohibido almacenar marcas horarias UTC neutras (`+00:00` o `Z`) que generen un desfase en el navegador de familias y entrenadores.
+3. **Propagación Conjunta a Partidos y Agenda (`team_events`)**:
+   - Cuando la FFCV actualiza un horario o fecha oficial, la sincronización debe actualizar tanto la tabla `partidos` como los eventos asociados en `team_events` para que los calendarios de familias y cuerpo técnico coincidan al 100%.
